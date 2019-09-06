@@ -1,22 +1,5 @@
 # phi
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e95c402d-e2d6-4ccc-b2a1-764ec566a448/deploy-status)](https://app.netlify.com/sites/optimistic-easley-42b705/deploys)
+
 > Design tools focussing on the golden ratio.
-
-## Build Setup
-
-``` bash
-# install dependencies
-$ npm run install
-
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
