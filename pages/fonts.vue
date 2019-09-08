@@ -10,15 +10,25 @@
           />
         </b-field>
       </div>
+      <div class="column is-6">
+        <b-field label="Text:">
+          <b-input v-model="text" />
+        </b-field>
+      </div>
     </div>
 
-    <div class="container">
-      <p
-        v-for="(l, i) in lines"
-        :key="i"
-        :style="l.style"
-      >{{ l.text }}</p>
-    </div>
+    <b-table
+      :data="tableData"
+    >
+      <template slot-scope="props">
+        <b-table-column field="size" label="Size">
+          {{ props.row.size }}
+        </b-table-column>
+        <b-table-column field="text" label="Text">
+          <p :style="props.row.style">{{ text }}</p>
+        </b-table-column>
+      </template>>
+    </b-table>
   </section>
 </template>
 
@@ -30,19 +40,21 @@ export default {
 
   data () {
     return {
-      base: 16
+      base: 16,
+      decimals: true,
+      text: 'The quick brown fox'
     }
   },
 
   computed: {
-    lines () {
+    tableData () {
       const orders = [ 2, 1.5, 1, 0.5, 0, -0.5 ]
 
       return orders.map(o => {
         const size = this.base * Math.pow(PHI, o)
 
         return {
-          text: size.toFixed(0),
+          size: size.toFixed(0),
           style: {
             fontSize: size + 'px'
           }
