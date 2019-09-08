@@ -28,6 +28,11 @@
             v-model="suffix"
             :native-value="s"
           >{{ s }}</b-radio-button>
+          <b-radio-button
+            v-model="suffix"
+            :native-value="customSuffix"
+            @click.native="editCustomSuffix"
+          ><em>custom</em></b-radio-button>
         </b-field>
       </div>
     </div>
@@ -52,6 +57,14 @@
             :size="smallTable ? 'is-small' : undefined"
           >
             {{ props.row.value }}
+          </b-button>
+        </b-table-column>
+        <b-table-column field="compliment" label="Compliment">
+          <b-button
+            @click="copy(props.row.compliment)"
+            :size="smallTable ? 'is-small' : undefined"
+          >
+            {{ props.row.compliment }}
           </b-button>
         </b-table-column>
       </template>
@@ -79,7 +92,8 @@ export default {
       dp: 3,
       suffix: '',
       suffixes: [ 'px', 'em', 'pt' ],
-      smallTable: false,
+      customSuffix: null,
+      smallTable: true,
       indices: localStorage.getItem(INDICES_KEY) ? 
         JSON.parse(localStorage.getItem(INDICES_KEY))
         : DEFAULT_INDICES
@@ -88,10 +102,14 @@ export default {
 
   computed: {
     tableData () {
-      return this.indices.map(index => ({
-        index,
-        value: (this.base * Math.pow(PHI, index)).toFixed(this.dp) + this.suffix
-      }))
+      return this.indices.map(index => {
+        const value = this.base * Math.pow(PHI, index)
+        return {
+          index,
+          value: value.toFixed(this.dp) + this.suffix,
+          compliment: Math.abs(this.base - value).toFixed(this.dp) + this.suffix
+        }
+      })
     }
   },
 
@@ -138,6 +156,21 @@ export default {
     saveIndices () {
       const value = JSON.stringify(this.indices)
       localStorage.setItem(INDICES_KEY, value)
+    },
+
+    editCustomSuffix () {
+      this.$buefy.dialog.prompt({
+        message: `Enter the custom suffix:`,
+        inputAttrs: {
+            type: 'text',
+            placeholder: '',
+            value: this.customSuffix
+        },
+        onConfirm: value => {
+          this.customSuffix = value
+          this.suffix = this.customSuffix
+        }
+      })
     }
   }
 }
