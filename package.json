@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "nuxt": "^2.10.1",
-    "nuxt-buefy": "^0.3.2",
+    "nuxt-buefy": "^0.3.18",
     "vue-clipboard2": "^0.3.1",
     "vuex-persist": "^2.1.0"
   },
